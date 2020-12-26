@@ -30,6 +30,8 @@ from gi.repository.GdkPixbuf import Pixbuf, InterpType
 script_path = os.path.dirname(os.path.realpath(__file__))
 iso_folder = os.path.expanduser("~/iso")
 
+keyboard_CMD = f"{script_path}/usb_keyboard.py"
+
 try:
     os.mkdir(iso_folder)
 except Exception:
@@ -390,6 +392,9 @@ def dd_cmd_update(dd_entry_box):
     DD_CMD = dd_entry_box.get_text()
     print(f"Updated DD command: {DD_CMD}")
 
+def emu_keyboard(emu_button):
+    global keyboard_CMD
+    phosh_run(keyboard_CMD)
 
 def EMU_cmd_update(EMU_entry_box):
     global EMU_CMD
@@ -474,6 +479,7 @@ def on_destroy(phonic_window):
 handlers = {
     "dd_usb": dd_usb,
     "emu_iso": emu_iso,
+    "emu_keyboard":emu_keyboard,
     "dd_cmd_update":dd_cmd_update,
     "EMU_cmd_update":EMU_cmd_update,
     "DD_target_update":DD_target_update,

@@ -352,8 +352,16 @@ def guess_target_device():
     return(the_guess)
 
 def phosh_run(cmd):
-    cmd.replace("'", '"')
-    cmd.replace('"', '\\"')
+    global selected_file
+    global DD_TARGET
+    #local_vars = f"device={DD_TARGET}; iso={selected_file}; device_or_iso={selected_file}; "
+    #Local vars are not working... this is a workaround
+    cmd = cmd.replace("$device_or_iso", selected_file)
+    cmd = cmd.replace("$device", DD_TARGET)
+    cmd = cmd.replace("$iso", selected_file)
+    
+    #cmd = cmd.replace("'", '"')
+    #cmd = cmd.replace('"', '\\"')
     cmd = f"clear; echo \\\"{cmd}\\\";read -p \\\"WARNING this is an admin command, close to window to cancel, enter to continue: \\\";{cmd}"
     full_cmd = f"kgx --command \"bash -c '{cmd}'\""
     print(full_cmd)
@@ -381,6 +389,11 @@ def EMU_cmd_update(EMU_entry_box):
     global EMU_CMD
     EMU_CMD = EMU_entry_box.get_text()
     print(f"Updated EMU command: {EMU_CMD}")
+
+def DD_target_update(DD_entry_box):
+    global DD_TARGET
+    DD_TARGET = DD_entry_box.get_text()
+    print(f"Updated DD target: {DD_TARGET}")
 
 def on_directory_up(up_button):
     global selected_file
@@ -457,6 +470,7 @@ handlers = {
     "emu_iso": emu_iso,
     "dd_cmd_update":dd_cmd_update,
     "EMU_cmd_update":EMU_cmd_update,
+    "DD_target_update":DD_target_update,
     "on_directory_up": on_directory_up,
     "on_destroy": on_destroy,
     "on_directory_chosen": on_directory_chosen,
@@ -484,7 +498,8 @@ iso_label = builder.get_object('iso_label')
 dd_cmd_entry = builder.get_object('dd_cmd_box')
 emu_cmd_entry = builder.get_object('emu_cmd_box')
 DD_target_entry = builder.get_object('DD_target')
-DD_target_entry.set_text(guess_target_device())
+DD_TARGET = guess_target_device()
+DD_target_entry.set_text(DD_TARGET)
 
 DD_CMD = dd_cmd_entry.get_text()
 EMU_CMD = emu_cmd_entry.get_text()

@@ -352,19 +352,24 @@ def guess_target_device():
     return(the_guess)
 
 def phosh_run(cmd):
-    kgx --command "bash -c '{cmd}'"
+    cmd.replace("'", '"')
+    cmd.replace('"', '\\"')
+    cmd = f"clear; echo \\\"{cmd}\\\";read -p \\\"WARNING this is an admin command, close to window to cancel, enter to continue: \\\";{cmd}"
+    full_cmd = f"kgx --command \"bash -c '{cmd}'\""
+    print(full_cmd)
+    os.system(full_cmd)
 
 #########################DEFINE Handlers#########################
 
 def dd_usb(dd_button):
     global DD_CMD
     print(f"Run: {DD_CMD}")
-    phosh_run("ls")
+    phosh_run(DD_CMD)
     
 def emu_iso(emu_button):
     global EMU_CMD
     print(f"Run: {EMU_CMD}")
-    phosh_run("ls")
+    phosh_run(EMU_CMD)
 
 def dd_cmd_update(dd_entry_box):
     global DD_CMD

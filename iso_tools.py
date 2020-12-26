@@ -356,10 +356,16 @@ def phosh_run(cmd):
     global DD_TARGET
     #local_vars = f"device={DD_TARGET}; iso={selected_file}; device_or_iso={selected_file}; "
     #Local vars are not working... this is a workaround
-    cmd = cmd.replace("$device_or_iso", selected_file)
-    cmd = cmd.replace("$device", DD_TARGET)
-    cmd = cmd.replace("$iso", selected_file)
+    #No iso set, use DD_Target
+    if selected_file == None:
+        cmd = cmd.replace("$device_or_iso", DD_TARGET)
+    else:
+        cmd = cmd.replace("$device_or_iso", selected_file)
+        cmd = cmd.replace("$device", DD_TARGET)
+        cmd = cmd.replace("$iso", selected_file)
     
+    if cmd.startswith("sudo ./"):
+        cmd = f"sudo {script_path}/{cmd[7:]}"
     #cmd = cmd.replace("'", '"')
     #cmd = cmd.replace('"', '\\"')
     cmd = f"clear; echo \\\"{cmd}\\\";read -p \\\"WARNING this is an admin command, close to window to cancel, enter to continue: \\\";{cmd}"

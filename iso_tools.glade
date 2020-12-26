@@ -213,7 +213,7 @@
                           <object class="GtkEntry" id="emu_cmd_box">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="text" translatable="yes">./emu_over_usb.sh $device_or_iso</property>
+                            <property name="text" translatable="yes">sudo ./emu_over_usb.sh $device_or_iso</property>
                             <signal name="changed" handler="EMU_cmd_update" swapped="no"/>
                           </object>
                           <packing>

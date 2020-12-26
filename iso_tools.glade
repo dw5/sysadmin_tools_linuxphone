@@ -171,7 +171,7 @@
                           <object class="GtkEntry" id="dd_cmd_box">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="text" translatable="yes">dd of=$device if=$iso count=10M status=progress; sync</property>
+                            <property name="text" translatable="yes">sudo dd of=$device if=$iso count=10M status=progress; sync</property>
                             <signal name="changed" handler="dd_cmd_update" swapped="no"/>
                           </object>
                           <packing>
